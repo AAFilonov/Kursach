@@ -47,8 +47,7 @@
 
             //print_r($dbs);
             echo "<tr>";
-            foreach ($dbs as $i) {
-              
+            foreach ($dbs as $i) {            
                
             echo " <th>" . $i . "</th>";
         
