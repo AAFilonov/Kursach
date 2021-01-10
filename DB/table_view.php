@@ -4,6 +4,14 @@
 
 <head>
     <title>Просмотр таблицы</title>
+    <style type="text/css">
+    table,
+    th,
+    td {
+        border: 1px solid black;
+    }
+    </style>
+    <script src="../js/jquery-3.5.1.min.js"></script>
 </head>
 
 <body>
@@ -24,79 +32,30 @@
     else{
         echo "<a href='db_view.php?db=".$_GET['db']."'>Назад</a>";
     echo "<h2> Таблица ".$_GET['table'].":</h2>";  } ?>
-    <table>
-<?php 
-    try{
-        
-        //mysqli_report(MYSQLI_REPORT_ALL);
-        
-        $db = mysqli_connect($_SESSION['server_adr'],  $_SESSION['user'],  $_SESSION['password'],$_SESSION['db_name']);
-        $table = $_GET['table'];
-        $db_name = $_GET['db'];
+    <div id="edit_querry_block">
+        <textarea name="" id="querry_text" cols="30" rows="10"></textarea>
+        <p><button id="send_querry">Отправить</button> </p>
+    </div>
 
-        $querry_col = "SELECT COLUMN_NAME
-        FROM INFORMATION_SCHEMA.COLUMNS
-        WHERE TABLE_SCHEMA = '$db_name' AND TABLE_NAME = '$table';";
-       //echo $querry ." <br>";
+    <div id="result_block">
 
-        $column_set = mysqli_query($db, $querry_col);
-        //print_r($column_set);
-        if( !$column_set=== false){
-            while ($db = mysqli_fetch_row($column_set))
-                $dbs[] = $db[0];
+    </div>
+   
+    <form id="edit_form"></form>
+    <button id="add_form" >Добавить</button>
+    <button id="save_form" disabled="true">Сохранить</button>
 
-            //print_r($dbs);
-            echo "<tr>";
-            foreach ($dbs as $i) {            
-               
-            echo " <th>" . $i . "</th>";
-        
-            }
-            echo "</tr>";
-        }
-        else{
-            echo 'error  while getting columns info';
-        }
+    <div id="object_block">
 
+    </div>
+    <div id="result_block">
 
-        $db = mysqli_connect($_SESSION['server_adr'],  $_SESSION['user'],  $_SESSION['password'],$_SESSION['db_name']);
-        $querry = " select "." *" . " from `$table`;";
-           // echo $querry ." <br>";
-           
-        $set = mysqli_query($db, $querry);
-        if( !$set=== false){
-         
-            $dbs = array();
-            //print_r($set);
-            while ($db = mysqli_fetch_row($set))
-                $dbs[] = $db;
-                //print_r($dbs);
-            foreach ($dbs as $i) {
-               echo "<tr>";
-                foreach ($i as $j) 
-                    echo " <td>" . $j . "</td>";
-                echo "</tr>";
-            }
-        }  
-        else{
-            echo "somethnig gone wrong"; 
-        } 
-    }
-    catch(Exception $e){
-        echo $e->getMessage();
-    }
-?>
-
-
-    </table>
+</div>
 
 
 
-
-
-
-
-
+    <script src="../js/script.js"> </script>
+    <script src="../js/table_view.js"> </script>
 </body>
 
 </html>

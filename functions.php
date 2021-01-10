@@ -101,10 +101,7 @@ ORDER BY
     `column_name`;";
     $column_set = mysqli_query($db, $querry_col);
     if( !$column_set=== false){
-    while ($db = mysqli_fetch_row($column_set)){   
-            $dbs[] = $db;
-                 
-        }
+        $dbs = mysqli_fetch_all($column_set);
     }
     //print_r($dbs);
     echo "<h3>Foreign keys:</h3>";
@@ -124,5 +121,50 @@ foreach ($dbs as $i){
 }
 echo "</table>";
 
+}
+function querry_exec($db_name,$query){
+
+    $reply = array();
+
+    mysqli_report(MYSQLI_REPORT_STRICT |MYSQLI_REPORT_ERROR);
+  
+    try{
+        $db = mysqli_connect($_SESSION['server_adr'],  $_SESSION['user'],  $_SESSION['password'],$db_name);
+    }
+    catch(Exception $e){
+        $reply['error']= "Connect error: ". $e->getMessage();
+        return $reply;
+    }
+
+    try{
+        $set = mysqli_query($db,$query );
+        if($set=== true){
+            $reply['info']="Operation succesful";
+        }
+        else if( ! $set=== false){
+            $dbs =  mysqli_fetch_all($set);
+             $reply['data']=  $dbs;
+             $reply['columns'] = mysqli_fetch_fields($set);
+             
+            // print_r($set);
+             $set->close();
+        }
+      
+        else $reply['error']="something gone wrong";
+       
+        
+    }
+   
+    catch(Exception $e){
+        $reply['error']= "Query error: ". $e->getMessage();
+    }
+    catch(RuntimeException $e){
+        $reply['error']= "Mysqli error: ". $e->getMessage();
+    }
+    finally{
+        //mysqli_close($db);      
+    }
+    $reply['query'] = $query;
+    return $reply;
 }
 ?>

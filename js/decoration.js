@@ -1,0 +1,1 @@
+$("input:checkbox").attr("disabled", true);

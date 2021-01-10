@@ -11,6 +11,7 @@
         border: 1px solid black;
     }
     </style>
+    <script src="../js/jquery-3.5.1.min.js"></script>
 </head>
 
 <body>
@@ -25,7 +26,7 @@ session_start();
 include '../restriction.php';
 include '../functions.php';
 
-
+echo "<a href='db_view.php?db=".$_GET['db']."'>Назад</a>";
 if (!empty($_GET['table'])) {
     //если некорректное 
     if (!isTableNameValid($_GET['db'],$_GET['table'])){
@@ -49,12 +50,21 @@ else{
 
 
     <p><button id="button_edit">Редактировать</button> </p>
+
+
     <div id="edit_querry_block">
-        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <textarea name="" id="querry_text" cols="30" rows="10"></textarea>
         <p><button id="send_querry">Отправить</button> </p>
     </div>
 
+    <div id="result_block">
 
+    </div>
+
+
+
+    <script src="../js/script.js" > </script>
+    <script src="../js/decoration.js" > </script>
 
 </body>
 
