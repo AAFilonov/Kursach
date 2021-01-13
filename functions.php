@@ -42,7 +42,7 @@ function fillColumnInfo($db_name,$table){
     }
    //print_r($dbs);
     echo "<h3>Columns:</h3>";
-    echo "<table>";
+    echo "<table class='table'>";
         echo "<tr>
          <th>column</th>
          <th>data type</th>
@@ -105,7 +105,7 @@ ORDER BY
     }
     //print_r($dbs);
     echo "<h3>Foreign keys:</h3>";
-    echo "<table>";
+    echo "<table  class='table'>";
     echo "<tr>
      <th>column</th>
      <th>foreign table</th>

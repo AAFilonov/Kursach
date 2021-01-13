@@ -12,17 +12,17 @@
     }
     </style>
     <script src="../js/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 
 <body>
 
 
 
+    <div class="container">
 
-
-
-    <?php
+        <?php
 session_start();
 include '../restriction.php';
 include '../functions.php';
@@ -36,36 +36,40 @@ if (!empty($_GET['table'])) {
     //редактировать существующую
     echo "<h2>Table ".$_GET['table'].":</h2>";
     $_SESSION['isNewTable']=false;
-    fillColumnInfo($_GET['db'],$_GET['table']);
-    fillFKInfo($_GET['db'],$_GET['table']);
-  
-}
-  
-else{
-    //создание новой таблицы
-    echo "<h2>New table:</h2>";
-    $_SESSION['isNewTable']=true;
-    }
-
     ?>
+        <div class="row">
+
+            <div class="col-md-7">
+                <?php fillColumnInfo($_GET['db'],$_GET['table']);?>
+            </div>
+            <div class="col-md-5">
+                <?php  fillFKInfo($_GET['db'],$_GET['table']);}?>
+            </div>
+            <div class="col-md-7">
 
 
-    <p><button id="button_edit">Редактировать</button> </p>
 
 
-    <div id="edit_querry_block">
-    <textarea name="" id="querry_text" cols="30" rows="10" style="height: 130px;"></textarea>
-        <p><button id="send_querry">Отправить</button> </p>
+
+
+                <p><button id="button_edit">Редактировать</button> </p>
+
+
+                <div id="edit_querry_block">
+                    <textarea name="" id="querry_text" cols="30" rows="10" style="height: 130px;"></textarea>
+                    <p><button id="send_querry">Отправить</button> </p>
+                </div>
+
+                <div id="result_block">
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div id="result_block">
-
-    </div>
-
-
-
-    <script src="../js/script.js" > </script>
-    <script src="../js/decoration.js" > </script>
+    <script src="../js/script.js"> </script>
+    <script src="../js/decoration.js"> </script>
 
 </body>
 
