@@ -10,8 +10,13 @@
     td {
         border: 1px solid black;
     }
+    #edit_form input{
+        display: block;
+    }
     </style>
     <script src="../js/jquery-3.5.1.min.js"></script>
+    <script  type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 </head>
 
 <body>
@@ -45,10 +50,11 @@
     <button id="add_form" >Добавить</button>
     <button id="save_form" disabled="true">Сохранить</button>
 
-    <div id="object_block">
+    
+    <table id='object_table'>
+    </table>
+    
 
-    </div>
-    <div id="result_block">
 
 </div>
 

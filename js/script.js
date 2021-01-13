@@ -48,6 +48,7 @@ function error_handle(result) {
     console.log(result.responseText);
 }
 $(document).ready(function() {
+
     $(document).on("click", "#send_querry", function() {
         var querry = $('#querry_text').val();
         //alert(querry);

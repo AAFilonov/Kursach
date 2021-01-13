@@ -130,7 +130,24 @@ function form_fill() {
 
 function render_table(result) {
     $("#object_block").empty();
-    var table_info = "<table>";
+
+    var col_info = [];
+    result['columns'].forEach(function(item, i, arr) {
+
+        var tmp = {
+            title: item['name']
+        };
+        col_info.push(tmp);
+    });
+    console.log("columns:");
+    console.log(col_info);
+    $("#object_table").DataTable({
+        data: result['data'],
+        columns: col_info
+
+    });
+    /*
+    var table_info = "";
     table_info += "<tr>";
     result['columns'].forEach(function(item, i, arr) {
         table_info += "<th>";
@@ -153,8 +170,11 @@ function render_table(result) {
         table_info += "<td> <a class='edit_row' href='#' onclick='del_row_click(" + i + ")'>удалить</a></td>";
 
     });
-    table_info += "</table>";
-    $("#object_block").append(table_info);
+
+    $("#object_table").append(table_info);
+    // $('#object_table').DataTable();
+    */
+
 }
 
 function object_success_handle(result) {
