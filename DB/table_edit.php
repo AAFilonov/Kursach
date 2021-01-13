@@ -54,7 +54,7 @@ else{
 
 
     <div id="edit_querry_block">
-        <textarea name="" id="querry_text" cols="30" rows="10"></textarea>
+    <textarea name="" id="querry_text" cols="30" rows="10" style="height: 130px;"></textarea>
         <p><button id="send_querry">Отправить</button> </p>
     </div>
 

@@ -14,11 +14,11 @@ $_SESSION['db_name']=$db_name;
 ?>
 
 <head>
-<title>
-    <?php //название базы
+    <title>
+        <?php //название базы
     echo"".$_SESSION['db_name'] ." database " ?>
-     </title>
-        <style type="text/css">
+    </title>
+    <style type="text/css">
     table,
     th,
     td {
@@ -26,15 +26,40 @@ $_SESSION['db_name']=$db_name;
     }
     </style>
     <script src="../js/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 
 <body>
-    <?php echo"<h1>".$_SESSION['db_name'] ." database </h1>" ?>
-    <a href="../db_list.php">Назад</a>
-    <h2>Список таблиц:</h2>
-    <table>
 
-        <?php 
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md">
+                <h1> <?php echo"".$_SESSION['db_name'] ." database " ?> </h1>
+                <h2> <a href="../db_list.php">(назад)</a></h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <div id="edit_querry_block">
+                    <textarea name="" id="querry_text" cols="30" rows="10" style="height: 130px;"></textarea>
+                    <p><button id="send_querry">Отправить</button> </p>
+                </div>
+
+                <div id="result_block">
+
+                </div>
+            </div>
+            <div class="col-md">
+
+
+
+                <h2>Список таблиц:</h2>
+                <table class="table">
+
+                    <?php 
     $db = mysqli_connect($_SESSION['server_adr'],  $_SESSION['user'],  $_SESSION['password']);
     $set = mysqli_query($db, 'SHOW TABLES FROM '.$_SESSION['db_name'] .';');
     $dbs = array();
@@ -52,25 +77,16 @@ $_SESSION['db_name']=$db_name;
     }
     ?>
 
-    </table>
-    <p>
-        <?php
-      echo "   <a href='table_edit.php?db=".$_SESSION['db_name']."&table= '>Создать таблицу</a>";
- 
-    ?>
-    </p>
-    <div id="edit_querry_block">
-        <textarea name="" id="querry_text" cols="30" rows="10"></textarea>
-        <p><button id="send_querry">Отправить</button> </p>
-    </div>
+                </table>
 
-    <div id="result_block">
 
+            </div>
+
+        </div>
     </div>
 
 
-
-    <script src="../js/script.js" > </script>
+    <script src="../js/script.js"> </script>
 </body>
 
 </html>

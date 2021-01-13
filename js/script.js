@@ -19,7 +19,7 @@ function success_handle(result) {
     }
 
     if (result['data'] != null) {
-        var table_info = "<table>";
+        var table_info = "<table class='table  table-responsive'>";
         table_info += "<tr>";
         result['columns'].forEach(function(item, i, arr) {
             table_info += "<th>";
