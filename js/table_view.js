@@ -10,6 +10,9 @@ function update_success(result_) {
         $("#result_block").append(error_info);
         $("#save_form").attr("disabled", true);
         $("#add_form").attr("disabled", false);
+
+
+
         init();
     }
     if (result_['error'] != null) {
@@ -127,11 +130,18 @@ function form_fill() {
     });
 
 }
+var isTableInited = false;
+var table;
 
 function render_table(result) {
     $("#object_block").empty();
+    if (isTableInited) {
+
+        table.destroy();
+    }
 
     var col_info = [];
+    var data_info = [];
     result['columns'].forEach(function(item, i, arr) {
 
         var tmp = {
@@ -139,41 +149,50 @@ function render_table(result) {
         };
         col_info.push(tmp);
     });
-    console.log("columns:");
-    console.log(col_info);
-    $("#object_table").DataTable({
-        data: result['data'],
-        columns: col_info
-
-    });
-    /*
-    var table_info = "";
-    table_info += "<tr>";
-    result['columns'].forEach(function(item, i, arr) {
-        table_info += "<th>";
-        table_info += item['name'];
-        table_info += "</th>";
-    });
-    table_info += "</tr>";
+    var tmp_e = { title: "edit" };
+    var tmp_d = { title: "del" };
+    //col_info.push(tmp_e, tmp_d);
     result['data'].forEach(function(item, i, arr) {
-        table_info += "<tr id='data_row_" + i + "'>";
+        var tmp = item;
 
-        item.forEach(function(itemj, j, arr) {
-            table_info += "<td>";
-            table_info += itemj;
-            table_info += "</td>";
+        tmp['edit'] = i;
+        tmp['del'] = i;
+        //tmp['edit'] = "<td><a class='edit_row' href='#' onclick='edit_row_click(" + i + ")'>изменить</a></td>";
+        // tmp['del'] = "<td> <a class='edit_row' href='#' onclick='del_row_click(" + i + ")'>удалить</a></td>";
+        data_info.push(tmp);
+    });
+    console.log(col_info, data_info);
 
-        });
+    table = $("#object_table").DataTable({
+        data: data_info,
+        columns: [
+            col_info[0],
+            col_info[1],
+            col_info[2],
+            {
+                "data": "edit",
+                "render": function(data, type, row, meta) {
+                    if (type === 'display') {
+                        data = "<a href='#'   onclick='edit_row_click(" + data + ")'>" + "изменить" + "</a>";
+                    }
 
-        table_info += "<td><a class='edit_row' href='#' onclick='edit_row_click(" + i + ")'>изменить</a></td>";
+                    return data;
+                }
+            },
+            {
+                "data": "edit",
+                "render": function(data, type, row, meta) {
+                    if (type === 'display') {
+                        data = "<a href='#'   onclick='del_row_click(" + data + ")'>" + "удалить" + "</a>";
+                    }
 
-        table_info += "<td> <a class='edit_row' href='#' onclick='del_row_click(" + i + ")'>удалить</a></td>";
+                    return data;
+                }
+            }
+        ]
 
     });
-
-    $("#object_table").append(table_info);
-    // $('#object_table').DataTable();
-    */
+    isTableInited = true;
 
 }
 
@@ -208,4 +227,5 @@ function object_success_handle(result) {
 
 
 }
+
 init();
