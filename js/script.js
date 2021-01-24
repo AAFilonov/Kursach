@@ -75,7 +75,7 @@ function init() {
     let params = new URLSearchParams(queryString);
     let table = params.get("table"); // is the number 123
 
-    var querry = "select * from " + table;
+    var querry = "select * from " + table + " LIMIT " + $("#object_table_length").find('option:selected').text() + " OFFSET " + '0';
     //alert(querry);
     if (querry == "") alert("querry is empty!");
     else

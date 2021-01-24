@@ -10,9 +10,20 @@
     td {
         border: 1px solid black;
     }
+    #form_block{
+        padding: 10px;
+    }
+    form {
 
-    #edit_form div {
-        display: block;
+        float: left;
+
+        padding: 30px;
+
+    }
+
+    form div {
+        margin-bottom: 15px;
+        position: relative;
     }
     </style>
     <script src="../js/jquery-3.5.1.min.js"></script>
@@ -59,17 +70,33 @@
 
                 </div>
             </div>
-            <div class="col-md-7">
-                <div class="col-md-5 card align-items-center">
-                    <form id="edit_form"></form>
-                    <div class="align-items-centeralign-items-center">
-                        <button class="btn btn-primary" id="add_form">Добавить</button>
-                        <button class="btn btn-primary" id="save_form" disabled="true">Сохранить</button>
+
+            <div id="form_block" class="col-md-4 card align-items-center">
+                <form id="edit_form"></form>
+                <div class="">
+                    <button class="btn btn-primary" id="add_form">Добавить</button>
+                    <button class="btn btn-primary" id="save_form" disabled="true">Сохранить</button>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="table_contols">
+                    <div class="dataTables_length" id="object_table_length"><label>Show <select
+                                name="object_table_length" aria-controls="object_table" class="">
+                                <option value="100">100</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select> entries</label>
+                    </div>
+                    <div id="object_table_filter" class="dataTables_filter"><label>Search:<input type="search" class=""
+                                placeholder="" aria-controls="object_table"></label>
                     </div>
                 </div>
 
+
                 <table class="table " id='object_table'>
                 </table>
+
             </div>
         </div>
 

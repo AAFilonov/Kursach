@@ -124,13 +124,17 @@ function del_row_click(row_num) {
 
 function form_fill() {
     $("#edit_form").empty();
+    var form_html = "";
     Objects['columns'].forEach(function(item, i, arr) {
-        var element = "";
-        element += Objects['columns'][i]['name'] + ": ";
-        element += "<input 'type='text' ";
-        element += "name='" + Objects['columns'][i]['name'] + "'>";
-        $("#edit_form").append(element);
+        form_html += "<div>";
+        form_html += "<label for='" + Objects['columns'][i]['name'] + "'>" + Objects['columns'][i]['name'] + ":";
+        form_html += "</label>";
+        form_html += "<input 'type='text' ";
+        form_html += "name='" + Objects['columns'][i]['name'] + "'>";
+        form_html += "</div>";
     });
+
+    $("#edit_form").append(form_html);
 
 }
 var isTableInited = false;
@@ -167,6 +171,13 @@ function render_table(result) {
     console.log(col_info, data_info);
 
     table = $("#object_table").DataTable({
+
+        paging: false,
+        ordering: true,
+        info: false,
+        searching: false,
+        scrollY: "600px",
+        scrollCollapse: true,
         data: data_info,
         columns: [
             col_info[0],
