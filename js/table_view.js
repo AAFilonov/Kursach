@@ -13,7 +13,7 @@ function update_success(result_) {
 
 
 
-        init();
+        table_fill();
     }
     if (result_['error'] != null) {
         var error_info = "<div>" + result_['error'] + "</div>";
@@ -107,14 +107,26 @@ function edit_row_click(row_num) {
 }
 
 function del_row_click(row_num) {
+    var column_data = [];
+
+    Objects['columns'].forEach(function(item, i, arr) {
+
+        var tmp = new Object();
+        tmp['name'] = item['name'];
+        column_data.push(tmp);
+
+
+    });
     console.log("delete row " + row_num);
+    console.log("col_data:");
+    console.log(column_data);
     $.ajax({
         type: "post",
         ContentType: "application/json",
         url: "../del_row.php",
         data: {
             old_poles: Objects['data'][row_num],
-            columns: Objects['columns'],
+            columns: column_data,
             table: Objects['columns'][0]['table']
         },
         success: update_success,

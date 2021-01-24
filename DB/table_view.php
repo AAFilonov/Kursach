@@ -17,16 +17,12 @@
 
     form {
 
-        float: left;
+       justify-items: right;
 
-        padding: 30px;
+        padding: 20px;
 
     }
 
-    form div {
-        margin-bottom: 15px;
-        position: relative;
-    }
 
     table.dataTable {
 

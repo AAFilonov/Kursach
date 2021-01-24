@@ -17,7 +17,7 @@ include './functions.php';
     //print_r( $array_cols);
   
     $item_arr_old = [];
-    for ($i = 0; $i <count ($array_old); $i++) {   
+    for ($i = 0; $i <count ( $array_cols); $i++) {   
         if($array_old[$i]!=null)
         $tmpOld =  $array_cols[$i]['name']. "=". "'".$array_old[$i]. "'" ;
         else  $tmpOld =  $array_cols[$i]['name']. " is NULL " ;
