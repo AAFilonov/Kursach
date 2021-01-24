@@ -143,8 +143,8 @@ var object_table;
 function render_table(result) {
 
     Objects = result;
-
-    object_table.clear();
+    console.log(result);
+    object_table.clear().draw();
     result['data'].forEach(function(item, i, arr) {
 
 
@@ -161,15 +161,42 @@ function render_table(result) {
 
 
 function table_fill(result) {
-
+    //alert("aa");
     var queryString = location.search; // Returns:'?q=123'
     // Further parsing:
     let params = new URLSearchParams(queryString);
     let table = params.get("table"); // is the number 123
+    var filter_str = "";
 
     var lenght = $("#object_table_length").find('option:selected').val();
-    var page = $("#object_table_page").find('option:selected').val();
-    var querry = "select * from " + table + " LIMIT " + lenght + " OFFSET " + lenght * page;
+    var page = selected_page;
+    var filter = $("#object_table_filter").val();
+    console.log(filter);
+
+
+
+    if (filter != "undefined" && filter != undefined && filter != '') {
+        var concat_str = "concat(";
+        console.log(Objects);
+
+        if (Objects === undefined) {
+            result.forEach(function(item, i, arr) {
+                concat_str += "coalesce(" + item[0] + ",''),' ',";
+            });
+
+        } else {
+            Objects['columns'].forEach(function(item, i, arr) {
+                concat_str += "coalesce(" + item['name'] + ",''),";
+            });
+        }
+
+
+        concat_str += "'')";
+        filter_str = " WHERE " + concat_str + " LIKE '%" + filter + "%' ";
+    }
+    var querry = "select * from " + table + filter_str + " LIMIT " + lenght * page + " , " + lenght;
+    // select * from tes_user where concat( id,name, coalesce(info_id,'') ) like '%1%' limit 0 ,3
+
 
     console.log("try to fill a table");
     $.ajax({
@@ -201,6 +228,9 @@ function object_success_handle(result) {
     $(document).on("click", "#save_form", save_form);
     $(document).on("click", "#add_form", add_form);
 
+    $('#inputDatabaseName').on('input', function(e) {
+        alert('Changed!')
+    });
 
 
     if (result['error'] != null) console.log(result['error']);
@@ -208,7 +238,7 @@ function object_success_handle(result) {
         console.log(result['data']);
         console.log(result['rows']);
         table_init(columns);
-        table_fill();
+        table_fill(columns);
 
     };
 

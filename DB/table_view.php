@@ -27,9 +27,19 @@
         margin-bottom: 15px;
         position: relative;
     }
-    .dataTables_wrapper.no-footer .dataTables_scrollBody  {
-    border-bottom: none !important;
-}
+
+    table.dataTable {
+
+        margin: 0 !important;
+    }
+
+    .table_contols {
+        display: flex;
+        justify-content: left;
+    }
+    .table_contols div{
+      padding: 10px;
+    }
     </style>
     <script src="../js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js">
@@ -83,34 +93,36 @@
                     <button class="btn btn-primary" id="save_form" disabled="true">Сохранить</button>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12" >
                 <div class="table_contols">
-                    <div class="dataTables_length" id="object_table_length"><label>Show <select
-                                name="object_table_length" aria-controls="object_table" class="">
+                    <div class="dataTables_length" id="object_table_length">
+                        <label>Show <select name="object_table_length">
+                                <option value="3">3</option>
                                 <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
                             </select> entries</label>
                     </div>
-                    <div id="object_table_filter" class="dataTables_filter"><label>Search:<input type="search" class=""
-                                placeholder="" aria-controls="object_table"></label>
+                    <div class="dataTables_filter">
+                        <label>Search:<input type="text" id="object_table_filter"></label>
+                        <button class="btn btn-primary" id="dataTables_filter_button">Поиск</button>
                     </div>
-                    <div class="dataTables_length" id="object_table_page"><label>Show <select name="object_table_length"
-                                aria-controls="object_table" class="">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select> entries</label>
-                    </div>
+
+                </div>
+
+                <div>
+                    <table class="table " id='object_table'>
+                    </table>
                 </div>
 
 
-                <table class="table " id='object_table'>
-                </table>
-
+                <div class="dataTables_filter">
+                    <button class="btn btn-primary" id="button_page_begining">В начало</button>
+                    <button class="btn btn-primary" id="button_page_prev">Предыдущая</button>
+                    <label>Текущая:<input type="text" id="selected_page" value="0" style="width: 40px;"></label>
+                    <button class="btn btn-primary" id="button_page_next">Следующая</button>
+                </div>
             </div>
         </div>
 

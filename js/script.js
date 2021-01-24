@@ -66,10 +66,53 @@ $(document).ready(function() {
 
 
     });
+    $(document).on("change", "#object_table_length", table_fill);
+    $(document).on("click", "#dataTables_filter_button", table_fill);
+    $(document).on("change", "#object_table_page", table_fill);
+
+    $(document).on("click", "#button_page_prev", function() {
+
+        if (selected_page != 0) {
+            selected_page -= 1;
+            $("#selected_page").val(selected_page);
+            table_fill();
+        } else {
+            alert("Достигнута нулевая страница");
+        }
+
+        // 
+    });
+    $(document).on("click", "#button_page_next", function() {
+        selected_page += 1;
+
+        $("#selected_page").val(selected_page);
+        table_fill();
+    })
+    $(document).on("click", "#button_page_begining", function() {
+        selected_page = 0;
+        $("#selected_page").val(selected_page);
+        table_fill();
+    })
+    $("#selected_page").on("change", function() {
+
+        var val = parseInt($("#selected_page").val());
+        //alert(val);
+        console.log(val);
+        if (!isNaN(val)) {
+            selected_page = val;
+            table_fill();
+        } else {
+            alert("incorrect value");
+        }
+
+    })
 
 });
+var selected_page;
 
 function init() {
+    selected_page = 0;
+
     var queryString = location.search; // Returns:'?q=123'
     // Further parsing:
     let params = new URLSearchParams(queryString);
@@ -126,7 +169,7 @@ function table_init(columns) {
         info: false,
         searching: false,
         sScrollX: true,
-        scrollY: 120,
+        scrollY: 500,
         scrollH: true,
         scrollCollapse: true,
         columns: col_info,
