@@ -49,6 +49,7 @@ function save_form() {
     $.ajax({
         type: "post",
         url: "../update_row.php",
+        ContentType: "application/json",
         data: {
             new_poles: new_values,
             old_poles: Objects['data'][row_num_value],
@@ -76,6 +77,7 @@ function add_form() {
     $.ajax({
         type: "post",
         url: "../add_row.php",
+        ContentType: "application/json",
         data: {
             new_poles: new_values,
             columns: column_names,
@@ -108,6 +110,7 @@ function del_row_click(row_num) {
     console.log("delete row " + row_num);
     $.ajax({
         type: "post",
+        ContentType: "application/json",
         url: "../del_row.php",
         data: {
             old_poles: Objects['data'][row_num],

@@ -123,11 +123,8 @@ echo "</table>";
 
 }
 function querry_exec($db_name,$query){
-
     $reply = array();
-
     mysqli_report(MYSQLI_REPORT_STRICT |MYSQLI_REPORT_ERROR);
-  
     try{
         $db = mysqli_connect($_SESSION['server_adr'],  $_SESSION['user'],  $_SESSION['password'],$db_name);
     }
@@ -135,26 +132,19 @@ function querry_exec($db_name,$query){
         $reply['error']= "Connect error: ". $e->getMessage();
         return $reply;
     }
-
     try{
         $set = mysqli_query($db,$query );
         if($set=== true){
-            $reply['info']="Operation succesful";
-        }
+            $reply['info']="Operation succesful";}
         else if( ! $set=== false){
             $dbs =  mysqli_fetch_all($set);
              $reply['data']=  $dbs;
              $reply['columns'] = mysqli_fetch_fields($set);
-             
             // print_r($set);
              $set->close();
         }
-      
-        else $reply['error']="something gone wrong";
-       
-        
-    }
-   
+        else $reply['error']="something gone wrong";            
+    }  
     catch(Exception $e){
         $reply['error']= "Query error: ". $e->getMessage();
     }

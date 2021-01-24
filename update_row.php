@@ -37,7 +37,7 @@ include './functions.php';
         else  $tmpOld =  $array_cols[$i]. " is NULL " ;
        $item_arr_old[]= $tmpOld;
     }
-    echo join(", ",$item_arr_new);
+    //join(", ",$item_arr_new);
     //print_r( $item_arr_old);
     $query = "UPDATE $table ". "SET ".join(", ",$item_arr_new) ."WHERE "    . join("and ",$item_arr_old);
    

@@ -1,4 +1,5 @@
 <?php
+//ajax_requests.php
   session_start();
   include './restriction.php';
   include './functions.php';
