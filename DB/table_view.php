@@ -10,9 +10,11 @@
     td {
         border: 1px solid black;
     }
-    #form_block{
+
+    #form_block {
         padding: 10px;
     }
+
     form {
 
         float: left;
@@ -25,6 +27,9 @@
         margin-bottom: 15px;
         position: relative;
     }
+    .dataTables_wrapper.no-footer .dataTables_scrollBody  {
+    border-bottom: none !important;
+}
     </style>
     <script src="../js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js">
@@ -82,7 +87,7 @@
                 <div class="table_contols">
                     <div class="dataTables_length" id="object_table_length"><label>Show <select
                                 name="object_table_length" aria-controls="object_table" class="">
-                                <option value="100">100</option>
+                                <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
@@ -90,6 +95,15 @@
                     </div>
                     <div id="object_table_filter" class="dataTables_filter"><label>Search:<input type="search" class=""
                                 placeholder="" aria-controls="object_table"></label>
+                    </div>
+                    <div class="dataTables_length" id="object_table_page"><label>Show <select name="object_table_length"
+                                aria-controls="object_table" class="">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select> entries</label>
                     </div>
                 </div>
 

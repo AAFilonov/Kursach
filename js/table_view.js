@@ -95,9 +95,9 @@ function edit_row_click(row_num) {
     $("#add_form").attr("disabled", true);
     row_num_value = row_num;
     console.log("edit row " + row_num);
-    var form_items = $("#edit_form").children();
+    var form_items = $("#edit_form").find("input");
 
-    console.log(form_items);
+
     Objects['data'][row_num].forEach(function(item, i, arr) {
 
         form_items[i].value = item;
@@ -122,15 +122,15 @@ function del_row_click(row_num) {
     });
 }
 
-function form_fill() {
+function form_fill(columns) {
     $("#edit_form").empty();
     var form_html = "";
-    Objects['columns'].forEach(function(item, i, arr) {
+    columns['columns'].forEach(function(item, i, arr) {
         form_html += "<div>";
-        form_html += "<label for='" + Objects['columns'][i]['name'] + "'>" + Objects['columns'][i]['name'] + ":";
+        form_html += "<label for='" + columns['columns'][i][0] + "'>" + columns['columns'][i][0] + ":";
         form_html += "</label>";
         form_html += "<input 'type='text' ";
-        form_html += "name='" + Objects['columns'][i]['name'] + "'>";
+        form_html += "name='" + columns['columns'][i][0] + "'>";
         form_html += "</div>";
     });
 
@@ -138,83 +138,66 @@ function form_fill() {
 
 }
 var isTableInited = false;
-var table;
+var object_table;
 
 function render_table(result) {
-    $("#object_block").empty();
-    if (isTableInited) {
 
-        table.destroy();
-    }
+    Objects = result;
 
-    var col_info = [];
-    var data_info = [];
-    result['columns'].forEach(function(item, i, arr) {
-
-        var tmp = {
-            title: item['name']
-        };
-        col_info.push(tmp);
-    });
-    var tmp_e = { title: "edit" };
-    var tmp_d = { title: "del" };
-    //col_info.push(tmp_e, tmp_d);
+    object_table.clear();
     result['data'].forEach(function(item, i, arr) {
-        var tmp = item;
 
-        tmp['edit'] = i;
-        tmp['del'] = i;
-        //tmp['edit'] = "<td><a class='edit_row' href='#' onclick='edit_row_click(" + i + ")'>изменить</a></td>";
-        // tmp['del'] = "<td> <a class='edit_row' href='#' onclick='del_row_click(" + i + ")'>удалить</a></td>";
-        data_info.push(tmp);
+
+        item.push(i);
+        item.push(i);
+
+
+        object_table.row.add(item).draw(false);
     });
-    console.log(col_info, data_info);
 
-    table = $("#object_table").DataTable({
+    console.log(result);
+    console.log("table fill success");
+}
 
-        paging: false,
-        ordering: true,
-        info: false,
-        searching: false,
-        scrollY: "600px",
-        scrollCollapse: true,
-        data: data_info,
-        columns: [
-            col_info[0],
-            col_info[1],
-            col_info[2],
-            {
-                "data": "edit",
-                "render": function(data, type, row, meta) {
-                    if (type === 'display') {
-                        data = "<a href='#'   onclick='edit_row_click(" + data + ")'>" + "изменить" + "</a>";
-                    }
 
-                    return data;
-                }
-            },
-            {
-                "data": "edit",
-                "render": function(data, type, row, meta) {
-                    if (type === 'display') {
-                        data = "<a href='#'   onclick='del_row_click(" + data + ")'>" + "удалить" + "</a>";
-                    }
+function table_fill(result) {
 
-                    return data;
-                }
+    var queryString = location.search; // Returns:'?q=123'
+    // Further parsing:
+    let params = new URLSearchParams(queryString);
+    let table = params.get("table"); // is the number 123
+
+    var lenght = $("#object_table_length").find('option:selected').val();
+    var page = $("#object_table_page").find('option:selected').val();
+    var querry = "select * from " + table + " LIMIT " + lenght + " OFFSET " + lenght * page;
+
+    console.log("try to fill a table");
+    $.ajax({
+        type: "post",
+        url: "../ajax_requests.php",
+        data: {
+            request: querry
+        },
+        success: render_table,
+        error: {
+            function(result) {
+                console.log("failed to fill table");
+                console.log(result);
+
             }
-        ]
-
+        }
     });
-    isTableInited = true;
 
 }
 
 function object_success_handle(result) {
-    Objects = result;
-    console.log("success");
+
+    var columns = [];
+    columns['columns'] = result['data'];
+    //Objects = result;
+    console.log("column request success");
     console.log(result);
-    form_fill();
+    form_fill(columns);
     $(document).on("click", "#save_form", save_form);
     $(document).on("click", "#add_form", add_form);
 
@@ -224,18 +207,13 @@ function object_success_handle(result) {
     else {
         console.log(result['data']);
         console.log(result['rows']);
+        table_init(columns);
+        table_fill();
+
     };
 
 
 
-    if (result['error'] != null) {
-        var error_info = "<div>" + result['error'] + "</div>";
-        $("#object_block").append(error_info);
-    }
-
-    if (result['data'] != null) {
-        render_table(result);
-    }
 
 
 
